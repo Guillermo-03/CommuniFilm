@@ -1,11 +1,11 @@
 package com.communifilm.controllers;
 
 import com.communifilm.models.User;
-import com.communifilm.services.FirebaseService;
 import com.communifilm.services.UserService;
-import com.google.firebase.auth.FirebaseToken;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.communifilm.services.GoogleAuthService;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 
 import java.util.concurrent.ExecutionException;
 
@@ -13,22 +13,30 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/users")
 public class UserController {
 
-    private final FirebaseService firebaseService;
+    private final GoogleAuthService googleAuthService;
     private final UserService userService;
 
-    public UserController(FirebaseService firebaseService, UserService userService) {
-        this.firebaseService = firebaseService;
+    public UserController(GoogleAuthService googleAuthService, UserService userService) {
+        this.googleAuthService = googleAuthService;
         this.userService = userService;
     }
 
-    @PostMapping("/signup")
-    public String signup(@RequestHeader("Authorization") String idToken) throws Exception {
-        if (idToken.startsWith("Bearer ")) {
-            idToken = idToken.substring(7);
-        }
-        FirebaseToken decodedToken = firebaseService.verifyIdToken(idToken);
-        userService.saveUserFromAuth(decodedToken);
-        return "User signed up successfully: " + decodedToken.getUid();
+    /**
+     * Endpoint for users to sign in. It verifies the Google token and
+     * creates a user record on the first login.
+     *
+     * @param authorizationHeader The "Authorization: Bearer <ID_TOKEN>" header.
+     * @return A success message with the user's ID.
+     */
+    @PostMapping("/login")
+    public String login(@RequestHeader("Authorization") String authorizationHeader) throws Exception {
+        String idToken = authorizationHeader.substring(7);
+        GoogleIdToken.Payload payload = googleAuthService.verifyToken(idToken);
+
+        // This will create the user only if they don't exist
+        userService.processUserLogin(payload);
+
+        return "User authenticated successfully: " + payload.getSubject();
     }
 
     @PostMapping

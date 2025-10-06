@@ -2,7 +2,7 @@ package com.communifilm.services;
 
 import com.communifilm.models.User;
 import com.google.cloud.firestore.*;
-import com.google.firebase.auth.FirebaseToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.cloud.firestore.FieldValue;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +19,31 @@ public class UserService {
         this.firestore = firestore;
     }
 
-    // Auth-based user creation
-    public void saveUserFromAuth(FirebaseToken decodedToken) throws ExecutionException, InterruptedException {
-        Map<String, Object> data = new HashMap<>();
-        data.put("id", decodedToken.getUid());
-        data.put("email", decodedToken.getEmail());
-        data.put("displayName", decodedToken.getClaims().get("name"));
-        data.put("profilePictureUrl", decodedToken.getClaims().get("picture"));
-        data.put("createdAt", FieldValue.serverTimestamp());
-        data.put("updatedAt", FieldValue.serverTimestamp());
+    /**
+     * Handles user login. If it's the user's first time, a new record
+     * is created in the database. Otherwise, no database write is performed.
+     *
+     * @param payload The payload from the verified Google ID token.
+     */
+    public void processUserLogin(GoogleIdToken.Payload payload) throws ExecutionException, InterruptedException {
+        String userId = payload.getSubject();
+        DocumentReference userRef = firestore.collection("users").document(userId);
+        DocumentSnapshot snapshot = userRef.get().get();
 
-        firestore.collection("users").document(decodedToken.getUid()).set(data).get();
+        // Only create the user document if it does not already exist
+        if (!snapshot.exists()) {
+            Map<String, Object> newUser = new HashMap<>();
+            newUser.put("uid", userId);
+            newUser.put("email", payload.getEmail());
+            newUser.put("displayName", payload.get("name"));
+            newUser.put("profilePictureUrl", payload.get("picture"));
+            newUser.put("createdAt", FieldValue.serverTimestamp()); // Set the creation timestamp
+            newUser.put("updatedAt", FieldValue.serverTimestamp());
+
+            // Create the new user in Firestore
+            userRef.set(newUser).get();
+        }
+        // If the user already exists, no write to DB is required. Authentication is handled by the security filter
     }
 
     // Generic CRUD

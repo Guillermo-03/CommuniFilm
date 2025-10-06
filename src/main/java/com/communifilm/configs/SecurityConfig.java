@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/login").permitAll() // Allow anyone to access the signup endpoint
-                        .requestMatchers("/movies").permitAll()
+                        .requestMatchers("/movies/**").permitAll()
                         .anyRequest().authenticated()   // All other endpoints require authentication
                 )
                 .addFilterBefore(googleAuthFilter, UsernamePasswordAuthenticationFilter.class);

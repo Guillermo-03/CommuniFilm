@@ -1,10 +1,11 @@
 package com.communifilm.services;
 
+import com.communifilm.dtos.MovieDetailDto;
 import com.communifilm.dtos.MovieDto;
 import com.communifilm.dtos.TmdbResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MovieService {
 
-    private final RestTemplate restTemplate; // Inject RestTemplate
+    private final RestTemplate restTemplate;
 
     @Value("${tmdb.api.key}")
     private String apiKey;
@@ -25,15 +26,30 @@ public class MovieService {
     private String tmdbBaseUrl;
 
     public List<MovieDto> getTrendy() {
-        // Build the URL for the TMDB API
-        String url = UriComponentsBuilder.fromHttpUrl(tmdbBaseUrl + "/trending/movie/week")
+        String url = UriComponentsBuilder.fromUriString(tmdbBaseUrl + "/trending/movie/week")
                 .queryParam("api_key", apiKey)
                 .toUriString();
+        return processTmdbResponse(url);
+    }
 
-        // Make a synchronous GET request
+    public List<MovieDto> searchMovies(String query) {
+        String url = UriComponentsBuilder.fromUriString(tmdbBaseUrl + "/search/movie")
+                .queryParam("api_key", apiKey)
+                .queryParam("query", query)
+                .toUriString();
+        return processTmdbResponse(url);
+    }
+
+    public MovieDetailDto getMovieDetails(int movieId) {
+        String url = UriComponentsBuilder.fromUriString(tmdbBaseUrl + "/movie/" + movieId)
+                .queryParam("api_key", apiKey)
+                .toUriString();
+        return restTemplate.getForObject(url, MovieDetailDto.class);
+    }
+
+    private List<MovieDto> processTmdbResponse(String url) {
         TmdbResponse response = restTemplate.getForObject(url, TmdbResponse.class);
 
-        // Process the response
         if (response == null || response.getResults() == null) {
             return Collections.emptyList();
         }

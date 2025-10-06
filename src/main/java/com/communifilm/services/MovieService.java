@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MovieService {
+    private static final String IMG_BASE =  "https://image.tmdb.org/t/p/w500";
 
     private final RestTemplate restTemplate;
 
@@ -55,7 +56,18 @@ public class MovieService {
         }
 
         return response.getResults().stream()
-                .map(r -> new MovieDto(r.getTitle(), r.getOverview()))
+                .map(r -> new MovieDto(
+                        r.getTitle(),
+                        r.getOverview(),
+                        toPosterURL(r.getPosterPath())))
                 .collect(Collectors.toList());
+    }
+
+    private static String toPosterURL(String path){
+        if (path == null || path.isBlank()){
+            return null;
+        }
+
+        return IMG_BASE + path;
     }
 }

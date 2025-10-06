@@ -1,6 +1,8 @@
 package com.communifilm.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -20,6 +22,9 @@ public class TmdbResponse {
         private String title;    // For movies
         private String name;     // For TV shows
         private String overview;
+        @JsonProperty("poster_path")
+        private String posterPath;
+
 
         public String getTitle() {
             return title != null ? title : name; // fallback for TV shows
@@ -27,6 +32,10 @@ public class TmdbResponse {
 
         public String getOverview() {
             return overview;
+        }
+
+        public String getPosterPath(){
+            return posterPath;
         }
 
         public void setTitle(String title) {
@@ -39,6 +48,10 @@ public class TmdbResponse {
 
         public void setOverview(String overview) {
             this.overview = overview;
+        }
+
+        public void setPosterPath(String posterPath){
+            this.posterPath = posterPath;
         }
     }
 }

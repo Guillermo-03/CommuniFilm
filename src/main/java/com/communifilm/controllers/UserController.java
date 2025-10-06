@@ -1,5 +1,7 @@
 package com.communifilm.controllers;
 
+import com.communifilm.dtos.LoginResponseDto;
+import com.communifilm.dtos.UpdateUserDto;
 import com.communifilm.models.User;
 import com.communifilm.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -26,23 +28,17 @@ public class UserController {
      * creates a user record on the first login.
      *
      * @param authorizationHeader The "Authorization: Bearer <ID_TOKEN>" header.
-     * @return A success message with the user's ID.
+     * @return LoginResponseDto
      */
     @PostMapping("/login")
-    public String login(@RequestHeader("Authorization") String authorizationHeader) throws Exception {
+    public ResponseEntity<LoginResponseDto> login(@RequestHeader("Authorization") String authorizationHeader) throws Exception {
         String idToken = authorizationHeader.substring(7);
         GoogleIdToken.Payload payload = googleAuthService.verifyToken(idToken);
 
-        // This will create the user only if they don't exist
-        userService.processUserLogin(payload);
+        boolean isNewUser = userService.processUserLogin(payload);
+        User user = userService.getUser(payload.getSubject());
 
-        return "User authenticated successfully: " + payload.getSubject();
-    }
-
-    @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User user) throws ExecutionException, InterruptedException {
-        userService.createUser(user);
-        return ResponseEntity.ok("User created");
+        return ResponseEntity.ok(new LoginResponseDto(isNewUser, user));
     }
 
     @GetMapping("/{uid}")
@@ -54,6 +50,12 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
         }
+    }
+
+    @PutMapping("/{uid}") // Changed to accept UID from path
+    public ResponseEntity<Void> updateUser(@PathVariable String uid, @RequestBody UpdateUserDto userDto) throws ExecutionException, InterruptedException {
+        userService.updateUser(uid, userDto);
+        return ResponseEntity.ok().build();
     }
 }
 

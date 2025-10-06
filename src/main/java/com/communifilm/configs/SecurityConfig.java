@@ -2,6 +2,7 @@ package com.communifilm.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,9 +25,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/users/login").permitAll() // Allow anyone to access the signup endpoint
-                        .requestMatchers("/movies/**").permitAll()
-                        .requestMatchers("/reviews/**").permitAll()
                         .anyRequest().authenticated()   // All other endpoints require authentication
                 )
                 .addFilterBefore(googleAuthFilter, UsernamePasswordAuthenticationFilter.class);

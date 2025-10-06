@@ -1,5 +1,6 @@
 package com.communifilm.services;
 
+import com.communifilm.dtos.UpdateUserDto;
 import com.communifilm.models.User;
 import com.google.cloud.firestore.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -20,44 +21,27 @@ public class UserService {
     }
 
     /**
-     * Handles user login. If it's the user's first time, a new record
-     * is created in the database. Otherwise, no database write is performed.
-     *
-     * @param payload The payload from the verified Google ID token.
+     * Handles user login. Returns true if a new user was created.
      */
-    public void processUserLogin(GoogleIdToken.Payload payload) throws ExecutionException, InterruptedException {
+    public boolean processUserLogin(GoogleIdToken.Payload payload) throws ExecutionException, InterruptedException {
         String userId = payload.getSubject();
         DocumentReference userRef = firestore.collection("users").document(userId);
         DocumentSnapshot snapshot = userRef.get().get();
 
-        // Only create the user document if it does not already exist
         if (!snapshot.exists()) {
             Map<String, Object> newUser = new HashMap<>();
             newUser.put("uid", userId);
             newUser.put("email", payload.getEmail());
             newUser.put("displayName", payload.get("name"));
             newUser.put("profilePictureUrl", payload.get("picture"));
-            newUser.put("createdAt", FieldValue.serverTimestamp()); // Set the creation timestamp
+            newUser.put("bio", null); // Explicitly set bio to null for new users
+            newUser.put("createdAt", FieldValue.serverTimestamp());
             newUser.put("updatedAt", FieldValue.serverTimestamp());
 
-            // Create the new user in Firestore
             userRef.set(newUser).get();
+            return true; // A new user was created
         }
-        // If the user already exists, no write to DB is required. Authentication is handled by the security filter
-    }
-
-    // Generic CRUD
-    public String createUser(User user) throws ExecutionException, InterruptedException {
-        DocumentReference docRef = firestore.collection("users").document();
-        Map<String,Object> data = new HashMap<>();
-        data.put("displayName", user.getDisplayName());
-        data.put("email", user.getEmail());
-        data.put("profilePictureUrl", user.getProfilePictureUrl());
-        data.put("createdAt", FieldValue.serverTimestamp());
-        data.put("updatedAt", FieldValue.serverTimestamp());
-
-        docRef.set(data).get();
-        return docRef.getId();
+        return false; // The user already existed
     }
 
     public User getUser(String id) throws ExecutionException, InterruptedException {
@@ -65,19 +49,22 @@ public class UserService {
         return snapshot.exists() ? snapshot.toObject(User.class) : null;
     }
 
-    public void updateUser(User user) throws ExecutionException, InterruptedException {
-        if (user.getUid() == null) throw new IllegalArgumentException("User ID cannot be null");
-        Map<String,Object> data = new HashMap<>();
-        data.put("displayName", user.getDisplayName());
-        data.put("email", user.getEmail());
-        data.put("profilePictureUrl", user.getProfilePictureUrl());
+    /**
+     * Updates user information from a DTO.
+     */
+    public void updateUser(String uid, UpdateUserDto userDto) throws ExecutionException, InterruptedException {
+        if (uid == null) throw new IllegalArgumentException("User ID cannot be null");
+
+        Map<String, Object> data = new HashMap<>();
+        if (userDto.getDisplayName() != null) {
+            data.put("displayName", userDto.getDisplayName());
+        }
+        if (userDto.getBio() != null) {
+            data.put("bio", userDto.getBio());
+        }
         data.put("updatedAt", FieldValue.serverTimestamp());
 
-        firestore.collection("users").document(user.getUid()).update(data).get();
-    }
-
-    public void deleteUser(String id) throws ExecutionException, InterruptedException {
-        firestore.collection("users").document(id).delete().get();
+        firestore.collection("users").document(uid).update(data).get();
     }
 }
 

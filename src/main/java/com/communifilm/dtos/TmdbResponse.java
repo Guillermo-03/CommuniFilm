@@ -24,6 +24,7 @@ public class TmdbResponse {
         private String overview;
         @JsonProperty("poster_path")
         private String posterPath;
+        private long id;
 
 
         public String getTitle() {
@@ -37,6 +38,8 @@ public class TmdbResponse {
         public String getPosterPath(){
             return posterPath;
         }
+
+        public long getId(){ return id;}
 
         public void setTitle(String title) {
             this.title = title;
@@ -52,6 +55,10 @@ public class TmdbResponse {
 
         public void setPosterPath(String posterPath){
             this.posterPath = posterPath;
+        }
+
+        public void setId(long id){
+            this.id = id;
         }
     }
 }

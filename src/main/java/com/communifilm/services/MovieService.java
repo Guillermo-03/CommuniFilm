@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MovieService {
-    private static final String IMG_BASE =  "https://image.tmdb.org/t/p/w500";
+    private static final String TMDB_IMG_BASE_URL =  "https://image.tmdb.org/t/p/w500";
 
     private final RestTemplate restTemplate;
 
@@ -59,7 +59,9 @@ public class MovieService {
                 .map(r -> new MovieDto(
                         r.getTitle(),
                         r.getOverview(),
-                        toPosterURL(r.getPosterPath())))
+                        toPosterURL(r.getPosterPath()),
+                        r.getId()
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -68,6 +70,6 @@ public class MovieService {
             return null;
         }
 
-        return IMG_BASE + path;
+        return TMDB_IMG_BASE_URL + path;
     }
 }

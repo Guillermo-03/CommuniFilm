@@ -5,13 +5,15 @@ public class MovieDto {
     private String title;
     private String overview;
     private String posterURL;
+    private long id;
 
     public MovieDto() {}
 
-    public MovieDto(String title, String overview, String posterURL) {
+    public MovieDto(String title, String overview, String posterURL, long id) {
         this.title = title;
         this.overview = overview;
         this.posterURL = posterURL;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -25,5 +27,7 @@ public class MovieDto {
     public String getPosterURL() {
         return posterURL;
     }
+
+    public long getId(){ return id ;}
 }
 

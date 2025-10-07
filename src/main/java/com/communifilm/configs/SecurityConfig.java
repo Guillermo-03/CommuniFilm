@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/login").permitAll() // Allow anyone to access the signup endpoint
                         .requestMatchers("/movies/**").permitAll()
+                        .requestMatchers("/reviews/**").permitAll()
                         .anyRequest().authenticated()   // All other endpoints require authentication
                 )
                 .addFilterBefore(googleAuthFilter, UsernamePasswordAuthenticationFilter.class);

@@ -17,6 +17,6 @@ public class User {
     private String displayName;
     private String bio;
     private String profilePictureUrl;
-    private Instant createdAt;        // optional for Java use
-    private Instant updatedAt;        // optional for Java use
+    private Instant createdAt;
+    private Instant updatedAt;
 }

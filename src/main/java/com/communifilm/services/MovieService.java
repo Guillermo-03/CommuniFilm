@@ -45,7 +45,13 @@ public class MovieService {
         String url = UriComponentsBuilder.fromUriString(tmdbBaseUrl + "/movie/" + movieId)
                 .queryParam("api_key", apiKey)
                 .toUriString();
-        return restTemplate.getForObject(url, MovieDetailDto.class);
+
+        MovieDetailDto movieDetails = restTemplate.getForObject(url, MovieDetailDto.class);
+        if (movieDetails != null) {
+            movieDetails.setPosterURL(toPosterURL(movieDetails.getPosterPath()));
+        }
+
+        return movieDetails;
     }
 
     private List<MovieDto> processTmdbResponse(String url) {

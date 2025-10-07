@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.communifilm.services.GoogleAuthService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -41,6 +43,22 @@ public class UserController {
         return ResponseEntity.ok(new LoginResponseDto(isNewUser, user));
     }
 
+    @GetMapping
+    public ResponseEntity<List<User>> getUsers(@RequestParam List<String> uids) {
+        try {
+            List<User> users = new ArrayList<>();
+            for (String uid : uids) {
+                User user = userService.getUser(uid);
+                if (user != null) {
+                    users.add(user);
+                }
+            }
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
     @GetMapping("/{uid}")
     public ResponseEntity<User> getUser(@PathVariable String uid) {
         try {
@@ -52,7 +70,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{uid}") // Changed to accept UID from path
+    @PutMapping("/{uid}")
     public ResponseEntity<Void> updateUser(@PathVariable String uid, @RequestBody UpdateUserDto userDto) throws ExecutionException, InterruptedException {
         userService.updateUser(uid, userDto);
         return ResponseEntity.ok().build();

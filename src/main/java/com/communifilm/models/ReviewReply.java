@@ -17,4 +17,5 @@ public class ReviewReply{
     private String userId;
     private String text;
     private Instant createdAt;
-    private Instant updatedAt;}
+    private Instant updatedAt;
+}

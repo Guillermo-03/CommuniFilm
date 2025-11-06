@@ -18,4 +18,5 @@ public class ReviewReply{
     private String text;
     private Instant createdAt;
     private Instant updatedAt;
+
 }

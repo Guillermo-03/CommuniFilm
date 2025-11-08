@@ -24,5 +24,4 @@ hs_err_pid*
 replay_pid*
 
 src/main/resources/firebase/communifilm-e3805-firebase.json
-.idea
 target

@@ -1,8 +1,11 @@
 package com.communifilm.dtos;
 
+import java.util.List;
+
 public class UpdateUserDto {
     private String displayName;
     private String bio;
+    private List<TopMovieInputDto> topMovies;
 
     // Getters and Setters
     public String getDisplayName() {
@@ -19,5 +22,13 @@ public class UpdateUserDto {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public List<TopMovieInputDto> getTopMovies() {
+        return topMovies;
+    }
+
+    public void setTopMovies(List<TopMovieInputDto> topMovies) {
+        this.topMovies = topMovies;
     }
 }

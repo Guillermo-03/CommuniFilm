@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,6 +18,7 @@ public class User {
     private String displayName;
     private String bio;
     private String profilePictureUrl;
+    private List<FavoriteMovie> topMovies;
     private Instant createdAt;
     private Instant updatedAt;
 }

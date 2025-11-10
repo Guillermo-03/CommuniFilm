@@ -1,4 +1,4 @@
-package com.communifilm.models;
+package com.communifilm.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,12 +10,9 @@ import java.time.Instant;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewReply{
+public class ReviewReplyResponseDto {
     private String replyId;
-    private String parentReviewId;
-    private Long movieId;
-    private String userId;
+    private String username;
     private String text;
     private Instant createdAt;
-    private Instant updatedAt;
 }

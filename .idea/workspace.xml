@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4135850-6277-4b40-86f8-bf6f59677566" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/dtos/UpdateUserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/dtos/UpdateUserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/ai/MovieAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/ai/MovieAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/ai/MovieReviewTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/ai/MovieReviewTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/services/MovieAgentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/services/MovieAgentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/services/MovieReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/services/MovieReviewService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +61,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.CommuniFilmApplication.executor": "Run",
-    "git-widget-placeholder": "issue-23",
+    "git-widget-placeholder": "issue-25",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -120,7 +115,7 @@
       <workItem from="1761152189329" duration="36000" />
       <workItem from="1761265699652" duration="2154000" />
       <workItem from="1762556580312" duration="1060000" />
-      <workItem from="1762557646402" duration="3056000" />
+      <workItem from="1762557646402" duration="4870000" />
     </task>
     <servers />
   </component>

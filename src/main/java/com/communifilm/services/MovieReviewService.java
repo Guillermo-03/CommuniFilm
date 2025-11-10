@@ -51,4 +51,13 @@ public class MovieReviewService {
         }
         return reviews;
     }
+
+    public List<MovieReview> getReviewsForUser(String userId) throws ExecutionException, InterruptedException {
+        List<MovieReview> reviews = new ArrayList<>();
+        List<QueryDocumentSnapshot> documents = firestore.collection("reviews").whereEqualTo("userId", userId).get().get().getDocuments();
+        for (QueryDocumentSnapshot document : documents) {
+            reviews.add(document.toObject(MovieReview.class));
+        }
+        return reviews;
+    }
 }

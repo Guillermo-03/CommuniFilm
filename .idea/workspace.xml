@@ -6,10 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="f4135850-6277-4b40-86f8-bf6f59677566" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/ai/MovieAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/ai/MovieAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/ai/MovieReviewTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/ai/MovieReviewTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/services/MovieAgentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/services/MovieAgentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/controllers/AgentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/controllers/AgentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/controllers/ReviewReplyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/controllers/ReviewReplyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/dtos/CreateReviewReplyDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/dtos/CreateReviewReplyDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/dtos/ReviewReplyResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/dtos/ReviewReplyResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/models/MovieReview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/models/MovieReview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/models/ReviewReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/models/ReviewReply.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/services/MovieReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/services/MovieReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/communifilm/services/ReviewReplyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/communifilm/services/ReviewReplyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +65,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.CommuniFilmApplication.executor": "Run",
-    "git-widget-placeholder": "issue-25",
+    "git-widget-placeholder": "minor-fix",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

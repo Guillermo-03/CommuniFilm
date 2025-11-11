@@ -12,6 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class ReviewReplyResponseDto {
     private String replyId;
+    private String parentReviewId;
     private String username;
     private String text;
     private Instant createdAt;

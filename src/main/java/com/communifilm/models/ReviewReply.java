@@ -15,6 +15,7 @@ public class ReviewReply{
     private String parentReviewId;
     private Long movieId;
     private String userId;
+    private String username;
     private String text;
     private Instant createdAt;
     private Instant updatedAt;

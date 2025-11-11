@@ -13,5 +13,6 @@ public class CreateReviewReplyDto {
     private String parentReviewId;
     private Long movieId;
     private String userId;
+    private String username;
     private String text;
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * Provides endpoints for users to interact with the AI assistant.
  */
 @RestController
-@RequestMapping("/api/agent")
+@RequestMapping("/agent")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 @Slf4j

@@ -15,9 +15,11 @@ import java.util.concurrent.ExecutionException;
 public class MovieReviewService {
 
     private final Firestore firestore;
+    private final ReviewReplyService reviewReplyService;
 
-    public MovieReviewService(Firestore firestore) {
+    public MovieReviewService(Firestore firestore, ReviewReplyService reviewReplyService) {
         this.firestore = firestore;
+        this.reviewReplyService = reviewReplyService;
     }
 
     public MovieReview createReview(CreateReviewDto reviewDto) throws ExecutionException, InterruptedException {
@@ -45,18 +47,32 @@ public class MovieReviewService {
 
     public List<MovieReview> getReviewsForMovie(Long movieId) throws ExecutionException, InterruptedException {
         List<MovieReview> reviews = new ArrayList<>();
-        List<QueryDocumentSnapshot> documents = firestore.collection("reviews").whereEqualTo("movieId", movieId).get().get().getDocuments();
+        List<QueryDocumentSnapshot> documents = firestore.collection("reviews")
+                .whereEqualTo("movieId", movieId)
+                .get()
+                .get()
+                .getDocuments();
+
         for (QueryDocumentSnapshot document : documents) {
-            reviews.add(document.toObject(MovieReview.class));
+            MovieReview review = document.toObject(MovieReview.class);
+            review.setReplyCount(reviewReplyService.countRepliesForReview(review.getReviewId()));
+            reviews.add(review);
         }
         return reviews;
     }
 
     public List<MovieReview> getReviewsForUser(String userId) throws ExecutionException, InterruptedException {
         List<MovieReview> reviews = new ArrayList<>();
-        List<QueryDocumentSnapshot> documents = firestore.collection("reviews").whereEqualTo("userId", userId).get().get().getDocuments();
+        List<QueryDocumentSnapshot> documents = firestore.collection("reviews")
+                .whereEqualTo("userId", userId)
+                .get()
+                .get()
+                .getDocuments();
+
         for (QueryDocumentSnapshot document : documents) {
-            reviews.add(document.toObject(MovieReview.class));
+            MovieReview review = document.toObject(MovieReview.class);
+            review.setReplyCount(reviewReplyService.countRepliesForReview(review.getReviewId()));
+            reviews.add(review);
         }
         return reviews;
     }

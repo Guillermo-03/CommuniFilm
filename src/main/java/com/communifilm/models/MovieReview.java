@@ -16,6 +16,7 @@ public class MovieReview {
     private Long movieId;
     private String userId;
     private String text;
+    private Integer replyCount;
     private Instant createdAt;
     private Instant updatedAt;
 }

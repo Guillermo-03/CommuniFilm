@@ -28,6 +28,7 @@ public class ReviewReplyService {
         newReplyData.put("parentReviewId", replyDto.getParentReviewId());
         newReplyData.put("movieId", replyDto.getMovieId());
         newReplyData.put("userId", replyDto.getUserId());
+        newReplyData.put("username", replyDto.getUsername());
         newReplyData.put("text", replyDto.getText());
         newReplyData.put("createdAt", FieldValue.serverTimestamp());
         newReplyData.put("updatedAt", FieldValue.serverTimestamp());
@@ -55,7 +56,8 @@ public class ReviewReplyService {
             replies.add(
                     ReviewReplyResponseDto.builder()
                             .replyId(reply.getReplyId())
-                            .username(reply.getUserId())
+                            .parentReviewId(reply.getParentReviewId())
+                            .username(reply.getUsername())
                             .text(reply.getText())
                             .createdAt(reply.getCreatedAt())
                             .build()
@@ -63,5 +65,15 @@ public class ReviewReplyService {
         }
 
         return replies;
+    }
+
+    public int countRepliesForReview(String reviewId) throws ExecutionException, InterruptedException {
+        List<QueryDocumentSnapshot> documents = firestore.collection("reviewReplies")
+                .whereEqualTo("parentReviewId", reviewId)
+                .get()
+                .get()
+                .getDocuments();
+
+        return documents.size();
     }
 }

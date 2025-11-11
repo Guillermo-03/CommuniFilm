@@ -4,14 +4,14 @@ import com.communifilm.dtos.CreateReviewReplyDto;
 import com.communifilm.dtos.ReviewReplyResponseDto;
 import com.communifilm.models.ReviewReply;
 import com.communifilm.services.ReviewReplyService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+@RestController
+@RequestMapping("/replies")
 public class ReviewReplyController {
     private ReviewReplyService reviewReplyService;
 
@@ -25,7 +25,7 @@ public class ReviewReplyController {
         return reviewReplyService.createReply(replyDto);
     }
 
-    @GetMapping("/replies/{reviewId}")
+    @GetMapping("/review/{reviewId}")
     public List<ReviewReplyResponseDto> getRepliesForReview(@PathVariable String reviewId) throws ExecutionException, InterruptedException{
         return reviewReplyService.getRepliesForReview(reviewId);
     }
